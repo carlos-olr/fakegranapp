@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import br.com.seasonpessoal.fakegranapp.R;
 import br.com.seasonpessoal.fakegranapp.bean.UsuarioBean;
+import br.com.seasonpessoal.fakegranapp.database.UsuarioEntity;
 import br.com.seasonpessoal.fakegranapp.util.SharedPrefsImpl;
 import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskImpl;
 import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskListener;
@@ -61,8 +62,9 @@ public class CadastroActivity extends AppCompatActivity {
                 public void onFinish(AsyncTaskParams result) {
                     String erro = result.getParam("erro");
                     if (erro == null) {
-                        SharedPrefsImpl.getInstance(getApplicationContext()).getShardPreferences().edit()
-                            .putString("token", (String) result.getParam("token")).apply();
+                        UsuarioEntity usuarioEntity = new UsuarioEntity((String) result.getParam("token"));
+                        usuarioEntity.save();
+
                         startActivity(new Intent(CadastroActivity.this, MainActivity.class));
                     } else {
                         Toast.makeText(CadastroActivity.this, erro, Toast.LENGTH_LONG).show();
@@ -195,28 +197,33 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void mostrarCadastro(View botao) {
-        View botoesIniciaisLayout = findViewById(R.id.cadastro_botoes_iniciais_layout);
+        this.esconderTudo();
         View cadastroLayout = findViewById(R.id.cadastro_cadastro_layout);
 
         cadastroLayout.setVisibility(View.VISIBLE);
-        botoesIniciaisLayout.setVisibility(View.GONE);
     }
 
     public void mostrarLogin(View botao) {
-        View botoesIniciaisLayout = findViewById(R.id.cadastro_botoes_iniciais_layout);
+        this.esconderTudo();
         View loginLayout = findViewById(R.id.cadastro_login_layout);
 
         loginLayout.setVisibility(View.VISIBLE);
-        botoesIniciaisLayout.setVisibility(View.GONE);
     }
 
     private void configurarDefault() {
+        this.esconderTudo();
+        View botoesIniciaisLayout = findViewById(R.id.cadastro_botoes_iniciais_layout);
+
+        botoesIniciaisLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void esconderTudo() {
         View loginLayout = findViewById(R.id.cadastro_login_layout);
         View cadastroLayout = findViewById(R.id.cadastro_cadastro_layout);
         View botoesIniciaisLayout = findViewById(R.id.cadastro_botoes_iniciais_layout);
 
         loginLayout.setVisibility(View.GONE);
         cadastroLayout.setVisibility(View.GONE);
-        botoesIniciaisLayout.setVisibility(View.VISIBLE);
+        botoesIniciaisLayout.setVisibility(View.GONE);
     }
 }

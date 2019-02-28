@@ -21,7 +21,10 @@ public class UsuarioBean implements Serializable {
     private String nome;
     private String email;
     private String senha;
-    private String payload;
+    @JsonProperty("exp")
+    private Long dataExpiracao;
+    @JsonProperty("iat")
+    private Long dataLogin;
 
     public String getIdHash() {
         return idHash;
@@ -55,12 +58,20 @@ public class UsuarioBean implements Serializable {
         this.senha = senha;
     }
 
-    public String getPayload() {
-        return payload;
+    public Long getDataExpiracao() {
+        return dataExpiracao;
     }
 
-    public void setPayload(String payload) {
-        this.payload = payload;
+    public void setDataExpiracao(Long dataExpiracao) {
+        this.dataExpiracao = dataExpiracao;
+    }
+
+    public Long getDataLogin() {
+        return dataLogin;
+    }
+
+    public void setDataLogin(Long dataLogin) {
+        this.dataLogin = dataLogin;
     }
 
     @Override

@@ -2,21 +2,12 @@ package br.com.seasonpessoal.fakegranapp.activity;
 
 
 import br.com.seasonpessoal.fakegranapp.R;
-import br.com.seasonpessoal.fakegranapp.bean.UsuarioBean;
-import br.com.seasonpessoal.fakegranapp.util.SharedPrefsImpl;
-import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskImpl;
-import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskParams;
+import br.com.seasonpessoal.fakegranapp.database.UsuarioEntity;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -49,8 +40,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            //if (Lists.newArrayList(SugarRecord.findAll(UsuarioBean.class)).size() == 1) {
-            if (false) {
+            if (Lists.newArrayList(SugarRecord.findAll(UsuarioEntity.class)).size() == 1) {
                 startActivity(new Intent(LoadingActivity.this, MainActivity.class));
             } else {
                 startActivity(new Intent(LoadingActivity.this, CadastroActivity.class));

@@ -25,7 +25,7 @@
 			android:value="true"/>
 		<meta-data
 			android:name="DOMAIN_PACKAGE_NAME"
-			android:value="br.com.seasonpessoal.fakegranapp.bean"/>
+			android:value="br.com.seasonpessoal.fakegranapp.database"/>
 
 		<activity android:name=".activity.LoadingActivity">
 			<intent-filter>

@@ -5,29 +5,13 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="br.com.seasonpessoal.fakegranapp.activity.MainActivity">
+	tools:context="br.com.seasonpessoal.fakegranapp.activity.MainActivity"
+	android:id="@+id/main_layout">
 
-	<TextView
-		android:text="TextView"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		tools:layout_editor_absoluteY="274dp"
-		tools:layout_editor_absoluteX="163dp"
-		android:id="@+id/main_token_edittext"
+	<android.support.v4.view.ViewPager
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentStart="true"
-		android:layout_marginLeft="20dp"
-		android:layout_marginTop="20dp"
-		android:textSize="16dp"/>
-	<TextView
-		android:text="TextView"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		tools:layout_editor_absoluteY="274dp"
-		tools:layout_editor_absoluteX="163dp"
-		android:id="@+id/main_json_edittext"
-		android:layout_marginTop="204dp"
-		android:textSize="16dp"
-		android:layout_below="@+id/main_token_edittext"
-		android:layout_alignStart="@+id/main_token_edittext"/>
+		android:id="@+id/main_paginador"/>
 </RelativeLayout>

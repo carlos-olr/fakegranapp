@@ -9,4 +9,13 @@ import com.orm.SugarApp;
  */
 public class FakegranApplication extends SugarApp {
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
 }
