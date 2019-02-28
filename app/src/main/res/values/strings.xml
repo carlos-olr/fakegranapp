@@ -1,0 +1,10 @@
+<resources>
+	<string name="app_name">FakegranApp</string>
+
+	<!-- Aplicação Remota -->
+	<string name="host">https://fakegran-app.herokuapp.com</string>
+	<string name="url_usuario_login">/usuario/login</string>
+	<string name="url_usuario_salvar">/usuario/salvar</string>
+	<string name="url_usuario_get">/usuario/:idUsuario</string>
+
+</resources>

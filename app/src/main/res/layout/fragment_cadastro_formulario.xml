@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<EditText
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:inputType="textPersonName"
+		android:backgroundTint="@color/loadingBackground"
+		android:ems="10"
+		android:layout_below="@+id/cadastro_imagem_logo"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="20dp"
+		android:id="@+id/cadastro_form_nome_edittext"
+		android:hint="Nome"
+		android:singleLine="true"/>
+	<EditText
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:backgroundTint="@color/loadingBackground"
+		android:layout_below="@+id/cadastro_form_nome_edittext"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/cadastro_form_email_edittext"
+		android:layout_marginTop="10dp"
+		android:singleLine="true"
+		android:inputType="textEmailAddress"
+		android:hint="Email"/>
+	<EditText
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:layout_below="@+id/cadastro_form_email_edittext"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/cadastro_form_senha_edittext"
+		android:layout_marginTop="10dp"
+		android:hint="Senha"
+		android:inputType="textPassword"
+		android:backgroundTint="@color/loadingBackground"/>
+	<EditText
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:inputType="textPassword"
+		android:ems="10"
+		android:layout_below="@+id/cadastro_form_senha_edittext"
+		android:layout_alignStart="@+id/cadastro_form_senha_edittext"
+		android:id="@+id/cadastro_form_confirmarsenha_edittext"
+		android:layout_marginTop="10dp"
+		android:hint="Confirmar Senha"
+		android:singleLine="true"
+		android:backgroundTint="@color/loadingBackground"
+		android:layout_marginBottom="10dp"/>
+</RelativeLayout>
