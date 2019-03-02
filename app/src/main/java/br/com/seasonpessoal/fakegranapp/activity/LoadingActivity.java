@@ -2,6 +2,7 @@ package br.com.seasonpessoal.fakegranapp.activity;
 
 
 import br.com.seasonpessoal.fakegranapp.R;
+import br.com.seasonpessoal.fakegranapp.activity.main.MainActivity;
 import br.com.seasonpessoal.fakegranapp.database.UsuarioEntity;
 
 import android.content.Intent;

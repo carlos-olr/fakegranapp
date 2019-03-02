@@ -3,6 +3,8 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".activity.main.MainActivity"
 	android:id="@+id/fragment_main_principal_layout">
 
 	<RelativeLayout
@@ -23,7 +25,7 @@
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/main_conteudo_layout"
+		android:id="@+id/main_principal_conteudo_layout"
 		android:layout_below="@+id/main_principal_layout_stories"
 		android:layout_alignParentStart="true"
 		android:layout_above="@+id/relativeLayout">
@@ -44,6 +46,7 @@
 			android:paddingBottom="5dp"
 			android:paddingTop="5dp"
 			android:layout_alignParentTop="true"
+			android:onClick="selecionarCameraTelaPrincipal"
 			android:layout_toStartOf="@+id/main_conta_btn"/>
 		<ImageView
 			android:layout_width="100dp"
@@ -53,6 +56,7 @@
 			android:paddingBottom="7dp"
 			android:paddingTop="7dp"
 			android:layout_alignParentTop="true"
+			android:onClick="selecionarContaTelaPrincipal"
 			android:layout_alignParentEnd="true"/>
 		<ImageView
 			android:layout_width="95dp"
@@ -62,15 +66,18 @@
 			android:paddingBottom="12dp"
 			android:paddingTop="12dp"
 			android:layout_alignParentTop="true"
-			android:layout_toEndOf="@+id/main_home_btn"/>
+			android:onClick="selecionarGridTelaPrincipal"
+			android:layout_toEndOf="@+id/main_feed_btn"/>
 		<ImageView
 			android:layout_width="95dp"
-			android:layout_height="wrap_content"
-			app:srcCompat="@drawable/icon_home"
-			android:id="@+id/main_home_btn"
+			android:layout_height="match_parent"
+			app:srcCompat="@drawable/icon_feed"
+			android:scaleType="centerInside"
+			android:id="@+id/main_feed_btn"
 			android:paddingTop="10dp"
 			android:paddingBottom="10dp"
 			android:layout_alignParentTop="true"
+			android:onClick="selecionarFeedTelaPrincipal"
 			android:layout_alignParentStart="true"/>
 	</RelativeLayout>
 

@@ -1,11 +1,11 @@
-package br.com.seasonpessoal.fakegranapp.activity;
+package br.com.seasonpessoal.fakegranapp.activity.main;
 
+
+import java.util.List;
 
 import br.com.seasonpessoal.fakegranapp.R;
-import br.com.seasonpessoal.fakegranapp.database.UsuarioEntity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,35 +13,75 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import com.orm.SugarRecord;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import com.google.common.collect.Lists;
 
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by carlos on 02/03/19.
+ */
+public abstract class MainSupportActivity extends AppCompatActivity {
 
-    private ViewPager paginador;
+    static final int REQUEST_PERMISSOES_FOTO = 151;
+    static final int REQUEST_TIRAR_FOTO = 152;
+
+    static final String OPERACAO_SELECIONAR_TELA_PRINCIPAL = "selecionarTelaPrincipal";
+
+    abstract <T> T executarOperacao(String operacao);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        UsuarioEntity usuario = SugarRecord.findAll(UsuarioEntity.class).next();
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        paginador = findViewById(R.id.container);
-        paginador.setAdapter(mSectionsPagerAdapter);
-        paginador.addOnPageChangeListener(new PageListener());
+        getWindow().getDecorView().post(new Runnable() {
 
-        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                paginador.setCurrentItem(1);
+                for (Integer botaoId : BOTOES) {
+                    View v = findViewById(botaoId);
+                    if (v != null) {
+                        v.setOnTouchListener(new AdicionarEfeitoClickOnTouhListener());
+                    }
+                }
             }
-        }, 100);
+
+        });
     }
 
-    private class PageListener implements ViewPager.OnPageChangeListener {
+    private List<Integer> BOTOES = Lists.newArrayList(
+        R.id.main_home_btn, R.id.main_grid_btn, R.id.main_camera_btn, R.id.main_conta_btn
+    );
+
+    private class AdicionarEfeitoClickOnTouhListener implements View.OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    ImageView view = (ImageView) v;
+                    view.setBackgroundResource(R.color.efeitoClick);
+                    view.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL: {
+                    ImageView view = (ImageView) v;
+                    view.setBackgroundResource(R.color.branco);
+                    view.invalidate();
+                    break;
+                }
+            }
+
+            return v.performClick();
+        }
+    }
+
+    protected class PageListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -54,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     break;
                 case 1:
-                    // Tela principal
+                    executarOperacao(OPERACAO_SELECIONAR_TELA_PRINCIPAL);
                     break;
                 case 2:
                     break;
@@ -117,5 +157,21 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 3;
         }
+    }
+
+    protected void alterarEstiloBotaoSelecionado(View view) {
+        ImageView botao = (ImageView) view;
+        switch (botao.getId()) {
+            case R.id.main_home_btn
+        }
+        botao.setImageDrawable(getDrawable(R.drawable.icon_account_selecionado));
+
+    }
+
+    protected void mostrarConteudo(View conteudo) {
+        RelativeLayout layoutConteudo = findViewById(R.id.main_principal_conteudo_layout);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(layoutConteudo.getWidth(), layoutConteudo.getHeight());
+        layoutConteudo.removeAllViewsInLayout();
+        layoutConteudo.addView(conteudo, params);
     }
 }

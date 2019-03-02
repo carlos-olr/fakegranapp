@@ -7,9 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.seasonpessoal.fakegranapp.R;
+import br.com.seasonpessoal.fakegranapp.activity.main.MainActivity;
 import br.com.seasonpessoal.fakegranapp.bean.UsuarioBean;
 import br.com.seasonpessoal.fakegranapp.database.UsuarioEntity;
-import br.com.seasonpessoal.fakegranapp.util.SharedPrefsImpl;
 import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskImpl;
 import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskListener;
 import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskParams;

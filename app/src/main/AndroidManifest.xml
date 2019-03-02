@@ -4,6 +4,9 @@
 	package="br.com.seasonpessoal.fakegranapp">
 
 	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.CAMERA" />
+
+	<uses-feature android:name="android.hardware.camera" android:required="true" />
 
 	<application
 		android:name=".application.FakegranApplication"
@@ -36,8 +39,18 @@
 		</activity>
 		<activity android:name=".activity.CadastroActivity">
 		</activity>
-		<activity android:name=".activity.MainActivity">
+		<activity android:name=".activity.main.MainActivity">
 		</activity>
+
+		<provider
+			android:name=".provider.CameraFileProvider"
+			android:authorities="${applicationId}"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/file_paths"/>
+		</provider>
 	</application>
 
 </manifest>

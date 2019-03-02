@@ -6,4 +6,7 @@
 	<color name="loadingBackground">#d4a37154</color>
 	<color name="loadingColor1">#e2e0de</color>
 	<color name="loadingColor2">#c7b299</color>
+	<color name="iconSelecionado">#3d6fb3</color>
+	<color name="efeitoClick">#83abe1</color>
+	<color name="branco">#FFFFFF</color>
 </resources>

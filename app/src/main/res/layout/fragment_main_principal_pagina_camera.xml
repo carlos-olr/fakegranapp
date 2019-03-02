@@ -2,7 +2,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/fragment_main_principal_pagina_camera_layout"
-	android:background="@android:color/holo_orange_dark">
+>
+
+	<ScrollView android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<RelativeLayout android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<ImageView
+				android:id="@+id/main_principal_pagina_camera_preview"
+				android:layout_width="200dp"
+				android:layout_height="200dp"
+				android:layout_alignParentTop="true"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="20dp"/>
+			<EditText
+				android:minWidth="300dp"
+				android:layout_marginTop="15dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:inputType="textMultiLine"
+				android:ems="8"
+				android:id="@+id/main_principal_pagina_foto_descricao"
+				android:layout_below="@id/main_principal_pagina_camera_preview"
+				android:layout_centerHorizontal="true"/>
+
+			<ImageView
+				android:src="@drawable/icon_check"
+				android:minWidth="300dp"
+				android:layout_marginTop="30dp"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:id="@+id/main_principal_pagina_foto_botao"
+				android:layout_below="@id/main_principal_pagina_foto_descricao"
+				android:layout_centerHorizontal="true"/>
+
+		</RelativeLayout>
+	</ScrollView>
+
 
 </RelativeLayout>
