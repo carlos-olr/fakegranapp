@@ -2,7 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:id="@+id/fragment_main_principal_pagina_conta_layout"
-	android:background="@android:color/holo_red_dark">
+	android:id="@+id/fragment_main_principal_pagina_conta_layout">
 
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:id="@+id/conta_dados_usuario_layout"
+		android:padding="10dp">
+
+		<TextView
+			android:text="NOME DO USUARIO"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentStart="true"
+			android:id="@+id/conta_nome_text"
+			android:textAppearance="@style/TextAppearance.AppCompat"
+			android:textSize="18dp"/>
+		<TextView
+			android:text="EMAIL DO USUARIO"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/conta_nome_text"
+			android:layout_alignStart="@+id/conta_nome_text"
+			android:id="@+id/conta_email_text"
+			android:textSize="12sp"/>
+	</RelativeLayout>
+	<GridView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:numColumns="3"
+		android:layout_below="@+id/conta_dados_usuario_layout"
+		android:layout_alignParentStart="true"
+		android:id="@+id/conta_posts_grid"/>
 </RelativeLayout>

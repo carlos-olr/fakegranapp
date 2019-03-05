@@ -1,8 +1,6 @@
 package br.com.seasonpessoal.fakegranapp.activity.main;
 
 
-import java.util.List;
-
 import br.com.seasonpessoal.fakegranapp.R;
 
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import com.google.common.collect.Lists;
 
 
 /**
@@ -41,10 +38,11 @@ public abstract class MainSupportActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                for (Integer botaoId : BOTOES) {
-                    View v = findViewById(botaoId);
+                for (BotaoMenu botaoMenu : BotaoMenu.values()) {
+                    View v = findViewById(botaoMenu.getId());
                     if (v != null) {
-                        v.setOnTouchListener(new AdicionarEfeitoClickOnTouhListener());
+                        v.setOnTouchListener(new AdicionarEfeitoClickOnTouhListener(R.color.branco,
+                            R.color.efeitoClick));
                     }
                 }
             }
@@ -52,11 +50,45 @@ public abstract class MainSupportActivity extends AppCompatActivity {
         });
     }
 
-    private List<Integer> BOTOES = Lists.newArrayList(
-        R.id.main_home_btn, R.id.main_grid_btn, R.id.main_camera_btn, R.id.main_conta_btn
-    );
+    protected enum BotaoMenu {
 
-    private class AdicionarEfeitoClickOnTouhListener implements View.OnTouchListener {
+        FEED(R.id.main_feed_btn, R.drawable.icon_feed, R.drawable.icon_feed_selecionado),
+        GRID(R.id.main_grid_btn, R.drawable.icon_grid, R.drawable.icon_grid_selecionado),
+        CAMERA(R.id.main_camera_btn, R.drawable.icon_camera, R.drawable.icon_camera_selecionado),
+        CONTA(R.id.main_conta_btn, R.drawable.icon_account, R.drawable.icon_account_selecionado);
+
+        private int id;
+        private int iconePadrao;
+        private int iconeSelecionado;
+
+        BotaoMenu(int id, int iconePadrao, int iconeSelecionado) {
+            this.id = id;
+            this.iconePadrao = iconePadrao;
+            this.iconeSelecionado = iconeSelecionado;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+
+        public int getIconePadrao() {
+            return this.iconePadrao;
+        }
+
+        public int getIconeSelecionado() {
+            return this.iconeSelecionado;
+        }
+    }
+
+    protected class AdicionarEfeitoClickOnTouhListener implements View.OnTouchListener {
+
+        private int efeitoPadrao;
+        private int efeitoClick;
+
+        AdicionarEfeitoClickOnTouhListener(int efeitoPadrao, int efeitoClick) {
+            this.efeitoPadrao = efeitoPadrao;
+            this.efeitoClick = efeitoClick;
+        }
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -64,20 +96,20 @@ public abstract class MainSupportActivity extends AppCompatActivity {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
                     ImageView view = (ImageView) v;
-                    view.setBackgroundResource(R.color.efeitoClick);
+                    view.setBackgroundResource(efeitoClick);
                     view.invalidate();
-                    break;
+
+                    return v.performClick();
                 }
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL: {
                     ImageView view = (ImageView) v;
-                    view.setBackgroundResource(R.color.branco);
+                    view.setBackgroundResource(efeitoPadrao);
                     view.invalidate();
                     break;
                 }
             }
-
-            return v.performClick();
+            return false;
         }
     }
 
@@ -159,19 +191,23 @@ public abstract class MainSupportActivity extends AppCompatActivity {
         }
     }
 
-    protected void alterarEstiloBotaoSelecionado(View view) {
-        ImageView botao = (ImageView) view;
-        switch (botao.getId()) {
-            case R.id.main_home_btn
-        }
-        botao.setImageDrawable(getDrawable(R.drawable.icon_account_selecionado));
-
+    protected void mostrarConteudo(int conteudoAlvo, BotaoMenu botaoMenu) {
+        RelativeLayout layoutConteudo = findViewById(R.id.main_principal_conteudo_layout);
+        RelativeLayout.LayoutParams params =
+            new RelativeLayout.LayoutParams(layoutConteudo.getWidth(), layoutConteudo.getHeight());
+        layoutConteudo.removeAllViewsInLayout();
+        View conteudo = LayoutInflater.from(this).inflate(conteudoAlvo, null);
+        layoutConteudo.addView(conteudo, params);
+        deselecionarTodosESelecionarEspecifico(botaoMenu);
     }
 
-    protected void mostrarConteudo(View conteudo) {
-        RelativeLayout layoutConteudo = findViewById(R.id.main_principal_conteudo_layout);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(layoutConteudo.getWidth(), layoutConteudo.getHeight());
-        layoutConteudo.removeAllViewsInLayout();
-        layoutConteudo.addView(conteudo, params);
+    private void deselecionarTodosESelecionarEspecifico(BotaoMenu botaoSelecionar) {
+        for (BotaoMenu botaoMenu : BotaoMenu.values()) {
+            ImageView btn = findViewById(botaoMenu.getId());
+            btn.setImageDrawable(getDrawable(botaoMenu.getIconePadrao()));
+            if (botaoMenu.equals(botaoSelecionar)) {
+                btn.setImageDrawable(getDrawable(botaoMenu.getIconeSelecionado()));
+            }
+        }
     }
 }

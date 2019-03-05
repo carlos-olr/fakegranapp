@@ -4,9 +4,11 @@
 	package="br.com.seasonpessoal.fakegranapp">
 
 	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.CAMERA"/>
 
-	<uses-feature android:name="android.hardware.camera" android:required="true" />
+	<uses-feature
+		android:name="android.hardware.camera"
+		android:required="true"/>
 
 	<application
 		android:name=".application.FakegranApplication"
@@ -39,7 +41,9 @@
 		</activity>
 		<activity android:name=".activity.CadastroActivity">
 		</activity>
-		<activity android:name=".activity.main.MainActivity">
+		<activity
+			android:name=".activity.main.MainActivity"
+			android:launchMode="singleTask">
 		</activity>
 
 		<provider
@@ -51,6 +55,9 @@
 				android:name="android.support.FILE_PROVIDER_PATHS"
 				android:resource="@xml/file_paths"/>
 		</provider>
+
+		<activity android:name=".activity.main.PostDetalhesActivity">
+		</activity>
 	</application>
 
 </manifest>

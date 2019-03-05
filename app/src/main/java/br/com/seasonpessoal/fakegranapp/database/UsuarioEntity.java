@@ -24,6 +24,10 @@ public class UsuarioEntity extends SugarRecord<UsuarioEntity> implements Seriali
         this.token = token;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public UsuarioBean getUsuarioBean() {
         String json = new String(Base64.decode(this.token.split("\\.")[1], Base64.DEFAULT));
         return JSONConverter.fromJSON(json, UsuarioBean.class);

@@ -2,9 +2,12 @@
 	<string name="app_name">FakegranApp</string>
 
 	<!-- Aplicação Remota -->
-	<string name="host">https://fakegran-app.herokuapp.com</string>
+	<string name="host">http://192.168.0.108:3000</string>
 	<string name="url_usuario_login">/usuario/login</string>
 	<string name="url_usuario_salvar">/usuario/salvar</string>
 	<string name="url_usuario_get">/usuario/:idUsuario</string>
+
+	<string name="url_post_criar">/post/</string>
+	<string name="url_posts_usuario">/post/idusuario</string>
 
 </resources>

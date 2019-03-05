@@ -6,6 +6,6 @@ package br.com.seasonpessoal.fakegranapp.util.asynctask;
  */
 public interface AsyncTaskListener {
 
-    public void onFinish(AsyncTaskParams asyncTaskParams);
+    public void onFinish(AsyncTaskParams resultado);
 
 }

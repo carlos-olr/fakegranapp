@@ -121,7 +121,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     private static class LoginAction extends AsyncTaskImpl {
 
-        public LoginAction(AsyncTaskListener asyncTaskListener) {
+        LoginAction(AsyncTaskListener asyncTaskListener) {
             super(asyncTaskListener);
         }
 
@@ -140,7 +140,8 @@ public class CadastroActivity extends AppCompatActivity {
                 Map<String, String> headers = Maps.newHashMap();
                 headers.put("Content-Type", "application/json");
 
-                String token = RequestHelper.doRequest(url, "POST", json.toString(), headers, String.class);
+                RequestHelper.BodyHelper body = new RequestHelper.BodyHelper().json(json.toString());
+                String token = RequestHelper.doRequest(url, "POST", body, headers, String.class);
                 param.putParam("token", token);
             } catch (FakegranException e) {
                 param.putParam("erro", e.getMessage());
@@ -167,7 +168,8 @@ public class CadastroActivity extends AppCompatActivity {
                 Map<String, String> headers = Maps.newHashMap();
                 headers.put("Content-Type", "application/json");
 
-                RequestHelper.doRequest(url, "POST", json, headers, String.class);
+                RequestHelper.BodyHelper body = new RequestHelper.BodyHelper().json(json);
+                RequestHelper.doRequest(url, "POST", body, headers, String.class);
             } catch (FakegranException e) {
                 param.putParam("erro", e.getMessage());
             }
