@@ -1,6 +1,9 @@
 package br.com.seasonpessoal.fakegranapp.activity;
 
 
+import java.io.File;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -8,6 +11,7 @@ import org.json.JSONObject;
 
 import br.com.seasonpessoal.fakegranapp.R;
 import br.com.seasonpessoal.fakegranapp.activity.main.MainActivity;
+import br.com.seasonpessoal.fakegranapp.activity.main.MainSupportActivity;
 import br.com.seasonpessoal.fakegranapp.bean.UsuarioBean;
 import br.com.seasonpessoal.fakegranapp.database.UsuarioEntity;
 import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskImpl;
@@ -16,11 +20,20 @@ import br.com.seasonpessoal.fakegranapp.util.asynctask.AsyncTaskParams;
 import br.com.seasonpessoal.fakegranapp.util.request.FakegranException;
 import br.com.seasonpessoal.fakegranapp.util.request.RequestHelper;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
@@ -90,11 +103,13 @@ public class CadastroActivity extends AppCompatActivity {
         if (this.validarCadastro()) {
             EditText nome = findViewById(R.id.cadastro_form_nome_edittext);
             EditText email = findViewById(R.id.cadastro_form_email_edittext);
+            EditText login = findViewById(R.id.cadastro_form_login_edittext);
             EditText senha = findViewById(R.id.cadastro_form_senha_edittext);
 
             UsuarioBean usuarioBean = new UsuarioBean();
             usuarioBean.setNome(nome.getText().toString());
             usuarioBean.setEmail(email.getText().toString());
+            usuarioBean.setLogin(login.getText().toString());
             usuarioBean.setSenha(senha.getText().toString());
 
             String url = getString(R.string.host) + getString(R.string.url_usuario_salvar);
@@ -119,6 +134,86 @@ public class CadastroActivity extends AppCompatActivity {
         }
     }
 
+    static final int REQUEST_PERMISSOES_FOTO = 151;
+    static final int REQUEST_TIRAR_FOTO = 152;
+
+    public void tirarFotoPerfil(View view) {
+        boolean camera =
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+
+        if (camera) {
+            ActivityCompat
+                .requestPermissions(this, new String[] { Manifest.permission.CAMERA }, REQUEST_PERMISSOES_FOTO);
+        } else {
+            executarIntentParaTirarFotos();
+        }
+    }
+
+    private String uriArquivo = null;
+    private File arquivoFoto = null;
+
+    private void executarIntentParaTirarFotos() {
+        Intent tirarFotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (tirarFotoIntent.resolveActivity(getPackageManager()) != null) {
+            try {
+                File diretorio = new File(getFilesDir(), "/fotostiradas");
+                if (!diretorio.exists()) {
+                    diretorio.mkdirs();
+                }
+                long agora = new Date().getTime();
+                arquivoFoto = File.createTempFile(String.valueOf(agora), ".jpg", diretorio);
+                uriArquivo = "file:" + arquivoFoto.getAbsolutePath();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            Uri photoURI = FileProvider.getUriForFile(this, getApplicationContext().getPackageName(), arquivoFoto);
+            tirarFotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            tirarFotoIntent.putExtra("android.intent.extra.quickCapture", true);
+
+            startActivityForResult(tirarFotoIntent, REQUEST_TIRAR_FOTO);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TIRAR_FOTO) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    mostrarConteudo(R.layout.fragment_main_principal_pagina_camera, MainSupportActivity.BotaoMenu.CAMERA);
+
+                    try {
+                        final InputStream inStreamFoto = getContentResolver().openInputStream(Uri.parse(uriArquivo));
+                        getWindow().getDecorView().post(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                View v = findViewById(R.id.main_principal_pagina_foto_botao);
+                                if (v != null) {
+                                    v.setOnTouchListener(
+                                        new MainSupportActivity.AdicionarEfeitoClickOnTouhListener(R.drawable.rounded_shape_branco,
+                                            R.drawable.rounded_shape_efeito_click));
+                                }
+
+                                ImageView imageView = findViewById(R.id.main_principal_pagina_camera_preview);
+
+                                Bitmap fotoBitmap = BitmapFactory.decodeStream(inStreamFoto);
+                                imageView.setImageBitmap(fotoBitmap);
+                            }
+                        });
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case RESULT_CANCELED:
+                    selecionarTelaPrincipal();
+                    break;
+                default:
+                    throw new RuntimeException("ResultCode " + resultCode + " não mapeado");
+            }
+        }
+    }
+
     private static class LoginAction extends AsyncTaskImpl {
 
         LoginAction(AsyncTaskListener asyncTaskListener) {
@@ -131,7 +226,6 @@ public class CadastroActivity extends AppCompatActivity {
             String url = param.getParam("url");
 
             try {
-                //String json = "{\"email\": " + JSONConverter.toJSON(param.getParam("usuarioBean")) + "}";
                 UsuarioBean usuarioBean = param.getParam("usuarioBean");
                 JSONObject json = new JSONObject();
                 json.put("email", usuarioBean.getEmail());

@@ -10,25 +10,39 @@
 		android:id="@+id/conta_dados_usuario_layout"
 		android:padding="10dp">
 
+		<ImageView
+			android:layout_marginEnd="6dp"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:id="@+id/conta_foto_perfil_imagem"/>
 		<TextView
 			android:text="NOME DO USUARIO"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:layout_alignParentStart="true"
 			android:id="@+id/conta_nome_text"
 			android:textAppearance="@style/TextAppearance.AppCompat"
-			android:textSize="18dp"/>
+			android:textSize="20dp"
+			android:layout_alignParentTop="true"
+			android:layout_toEndOf="@+id/conta_foto_perfil_imagem"/>
+		<TextView
+			android:text="LOGIN DO USUARIO"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/conta_login_text"
+			android:layout_below="@id/conta_nome_text"
+			android:textSize="14sp"
+			android:layout_toEndOf="@+id/conta_foto_perfil_imagem"/>
 		<TextView
 			android:text="EMAIL DO USUARIO"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/conta_nome_text"
+			android:layout_below="@+id/conta_login_text"
 			android:layout_alignStart="@+id/conta_nome_text"
 			android:id="@+id/conta_email_text"
-			android:textSize="12sp"/>
+			android:textSize="14sp"/>
 	</RelativeLayout>
 	<GridView
+		android:scrollbars="none"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:numColumns="3"

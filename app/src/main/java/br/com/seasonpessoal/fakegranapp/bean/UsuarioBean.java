@@ -20,6 +20,7 @@ public class UsuarioBean implements Serializable {
     private String idHash;
     private String nome;
     private String email;
+    private String login;
     private String senha;
     @JsonProperty("exp")
     private Long dataExpiracao;
@@ -72,6 +73,14 @@ public class UsuarioBean implements Serializable {
 
     public void setDataLogin(Long dataLogin) {
         this.dataLogin = dataLogin;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override

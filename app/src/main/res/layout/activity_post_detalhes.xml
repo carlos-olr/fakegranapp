@@ -16,8 +16,13 @@
 		<RelativeLayout android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
+			<ProgressBar
+				android:id="@+id/loading_post_detalhes"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"/>
+
 			<TextView
-				android:text="Criador"
+				android:visibility="gone"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_alignParentTop="true"
@@ -27,16 +32,17 @@
 				android:textSize="18dp"
 			/>
 			<ImageView
+				android:visibility="gone"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				app:srcCompat="@null"
 				android:id="@+id/post_detalhes_imagem"
-				android:scaleType="fitXY"
 				android:layout_below="@+id/post_detalhes_criador"
 				android:layout_centerHorizontal="true"
-				android:layout_marginTop="10dp"/>
+				android:layout_marginTop="10dp"
+				android:scaleType="fitXY"/>
 			<TextView
-				android:text="descricao"
+				android:visibility="gone"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_below="@+id/post_detalhes_imagem"
